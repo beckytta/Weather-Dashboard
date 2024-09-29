@@ -1,6 +1,6 @@
 :root{
-   --bg-color1: rgb(27, 57, 147);
-   --bg-color2: #2a2b2d;
+   --bg-color1: rgb(7, 7, 195);
+   --bg-color2: rgb(26, 123, 155);
    --a1-1:#d4e157;
    --ai-2:#ffee58;
    --ai-3:#ffca28;
@@ -22,6 +22,21 @@ body{
 hr{
   margin-bottom: 10px;
 }
+body.light-mode {
+  background-color: lightblue;
+  color: #000000;
+}
+
+body.dark-mode {
+  background-color: black;
+  color: #ffffff;
+}
+
+#theme-toggle-btn{
+  border-radius: 15px;
+  width: 100px;
+  height: 28px;
+}
 .header{
   top: 0;
   display: flex;
@@ -30,9 +45,9 @@ hr{
   position: sticky;
   background-color: var(--bg-color1);
   margin-bottom: 9px ;
-  padding: 14px 0;
+  padding: 15px 0;
   & #city_input{
-    background-color: var(--bg-color2);
+    background-color: rgb(7, 8, 86);
     border: none;
     font-size: 18px;
     padding: 11px;
@@ -65,7 +80,7 @@ hr{
   margin-bottom: 16px;
   background-color: var(--bg-color2);
   & p{
-    color: gray;
+    color: rgb(241, 248, 247);
     font-size: 17px;
   }
   & h2{
@@ -125,7 +140,7 @@ hr{
           margin-bottom: 12px;
           & .air-index{
             padding: 6px 12px;
-            color:black;
+            color:rgb(249, 233, 17);
             border-radius: 20px;
             &.ai-1{
               background-color: var(--a1-1);
