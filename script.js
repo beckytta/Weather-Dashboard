@@ -5,22 +5,23 @@ let cityInput = document.getElementById('city_input'),
     apiCard = document.querySelectorAll('.highlights .card')[0],
     aqiList = ['Good', 'Fair', 'Moderate', 'Poor', 'Very Poor'],
     sunriseCard = document.querySelectorAll('.highlights .card')[1],
+    hourlyForecastCard = document.querySelector('.hourly-forecast'), // Added for hourly forecast
     humidityVal = document.getElementById('humidityVal'),
-    pressureVal = document.getElementById('pressureVal'),  
+    pressureVal = document.getElementById('pressureVal'),
     visibilityVal = document.getElementById('visibilityVal'),
-    windSpeedVal = document.getElementById('windSpeedVal'),  
+    windSpeedVal = document.getElementById('windSpeedVal'),
     feelsVal = document.getElementById('feelsVal'),
     themeToggleBtn = document.getElementById('theme-toggle-btn');
-     
+
 const api_Key = "7bfff8480401c47a93c687da39a9e34c";
 
-if(localStorage.getItem('theme') ==='dark'){
+if (localStorage.getItem('theme') === 'dark') {
     document.body.classList.add('dark-mode');
 } else {
     document.body.classList.add('light-mode');
 }
 
-themeToggleBtn.addEventListener('click',() => {
+themeToggleBtn.addEventListener('click', () => {
     document.body.classList.toggle('dark-mode');
     document.body.classList.toggle('light-mode');
 
@@ -59,8 +60,8 @@ function getWeatherDetails(name, lat, lon, country, state) {
             'December',
         ];
 
-     fetch (AIR_POLLUTION_API_URL).then(res => res.json()).then(data => {
-        let{co, no, no2, o3, so2, pm2_5, pm10, nh3} = data.list[0].components;
+    fetch(AIR_POLLUTION_API_URL).then(res => res.json()).then(data => {
+        let { co, no, no2, o3, so2, pm2_5, pm10, nh3 } = data.list[0].components;
         apiCard.innerHTML = `
              <div class="card-head">
                   <p>Air Quality Index</p>
@@ -102,12 +103,13 @@ function getWeatherDetails(name, lat, lon, country, state) {
                   </div>
                 </div>
         `;
-     })   
+    })
+
     fetch(WEATHER_API_URL).then(res => res.json()).then(data => {
         if (data.cod !== 200) {
             throw new Error(data.message);
         }
-        
+
         let date = new Date();
         currentWeatherCard.innerHTML = `
             <div class="current-weather">
@@ -126,12 +128,12 @@ function getWeatherDetails(name, lat, lon, country, state) {
                 <p><i class="fa-solid fa-location-dot"></i> ${name}, ${country}</p>
             </div>
         `;
-        let{sunrise, sunset} = data.sys,
-        {timezone, visibility} = data,
-        {humidity, pressure, feels_like} = data.main,
-        {speed}= data.wind,
-        sRiseTime= moment.utc(sunrise, 'X').add(timezone, 'seconds').format('hh:mm A'),
-        sSetTime= moment.utc(sunset, 'X').add(timezone, 'seconds').format('hh:mm A');
+        let { sunrise, sunset } = data.sys,
+            { timezone, visibility } = data,
+            { humidity, pressure, feels_like } = data.main,
+            { speed } = data.wind,
+            sRiseTime = moment.utc(sunrise, 'X').add(timezone, 'seconds').format('hh:mm A'),
+            sSetTime = moment.utc(sunset, 'X').add(timezone, 'seconds').format('hh:mm A');
         sunriseCard.innerHTML = `
                   <div class="crd-head">
                   <p>Sunrise and Sunset</p>
@@ -156,13 +158,12 @@ function getWeatherDetails(name, lat, lon, country, state) {
                     </div>
                   </div>
                 </div>
-       ` ;
-       humidityVal.innerHTML = `${humidity}%`;
-       pressureVal.innerHTML = `${pressure}hPa`;
-       visibilityVal.innerHTML = `${visibility / 1000}km`;
-       windSpeedVal.innerHTML = `${speed}m/s`;
-       feelsVal.innerHTML = `${(feels_like - 273.15).toFixed(2)}&deg;C`;
-
+       `;
+        humidityVal.innerHTML = `${humidity}%`;
+        pressureVal.innerHTML = `${pressure}hPa`;
+        visibilityVal.innerHTML = `${visibility / 1000}km`;
+        windSpeedVal.innerHTML = `${speed}m/s`;
+        feelsVal.innerHTML = `${(feels_like - 273.15).toFixed(2)}&deg;C`;
     }).catch((error) => {
         alert('Failed to fetch current weather' + error.message);
     });
@@ -171,13 +172,13 @@ function getWeatherDetails(name, lat, lon, country, state) {
         let specificForecastDays = [];
         let sixDaysForecast = data.list.filter(forecast => {
             let forecastDate = new Date(forecast.dt_txt).getDate();
-            if(!specificForecastDays.includes(forecastDate)){
+            if (!specificForecastDays.includes(forecastDate)) {
                 return specificForecastDays.push(forecastDate);
             }
         });
         sixDaysForecastCard.innerHTML = '';
 
-        for(let i = 1; i < sixDaysForecast.length; i++){
+        for (let i = 1; i < sixDaysForecast.length; i++) {
             let date = new Date(sixDaysForecast[i].dt_txt);
             sixDaysForecastCard.innerHTML += `
              <div class="forecast-thing">
@@ -188,10 +189,23 @@ function getWeatherDetails(name, lat, lon, country, state) {
                   <p>${date.getDate()} ${months[date.getMonth()]}</p>
                   <p>${days[date.getDay()]}</p>
                 </div>
-            
             `;
         }
 
+        // Add hourly forecast
+        hourlyForecastCard.innerHTML = '';
+        let hourlyData = data.list.slice(0, 12); // Show 12 hours of forecast
+
+        hourlyData.forEach(hour => {
+            let hourDate = new Date(hour.dt_txt);
+            hourlyForecastCard.innerHTML += `
+                <div class="hour-card">
+                    <p>${hourDate.getHours()}:00</p>
+                    <img src="https://openweathermap.org/img/wn/${hour.weather[0].icon}@2x.png" alt="">
+                    <p>${(hour.main.temp - 273.15).toFixed(2)}&deg;C</p>
+                </div>
+            `;
+        });
     }).catch((error) => {
         alert('Failed to fetch weather forecast' + error.message);
     });
@@ -200,18 +214,16 @@ function getWeatherDetails(name, lat, lon, country, state) {
 function getCityCoordinates() {
     let cityName = cityInput.value.trim();
     cityInput.value = '';
-    if (!cityName) return;
-    
-    let GEOCODING_API_URL = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${api_Key}`;
-    fetch(GEOCODING_API_URL).then(res => res.json()).then(data => {
+
+    let API_URL = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=${api_Key}`;
+    fetch(API_URL).then(res => res.json()).then(data => {
         if (data.length === 0) {
-            throw new Error("City not found");
+            throw new Error('City not found');
         }
-        
-        let { name, lat, lon, country, state } = data[0];
+        let { lat, lon, name, country, state } = data[0];
         getWeatherDetails(name, lat, lon, country, state);
-    }).catch(() => {
-        alert(`City not found. Please try again`);
+    }).catch(error => {
+        alert('Failed to fetch city coordinates: ' + error.message);
     });
 }
 
