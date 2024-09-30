@@ -3,7 +3,13 @@ let cityInput = document.getElementById('city_input'),
     currentWeatherCard = document.querySelectorAll('.weather-left .card')[0],
     sixDaysForecastCard = document.querySelector('.day-forecast'),
     apiCard = document.querySelectorAll('.highlights .card')[0],
-    aqiList = ['Good', 'Fair', 'Moderate', 'Poor', 'Very Poor']
+    aqiList = ['Good', 'Fair', 'Moderate', 'Poor', 'Very Poor'],
+    sunriseCard = document.querySelectorAll('.highlights .card')[1],
+    humidityVal = document.getElementById('humidityVal'),
+    pressureVal = document.getElementById('pressureVal'),  
+    visibilityVal = document.getElementById('visibilityVal'),
+    windSpeedVal = document.getElementById('windSpeedVal'),  
+    feelsVal = document.getElementById('feelsVal'),
     themeToggleBtn = document.getElementById('theme-toggle-btn');
      
 const api_Key = "7bfff8480401c47a93c687da39a9e34c";
@@ -120,6 +126,43 @@ function getWeatherDetails(name, lat, lon, country, state) {
                 <p><i class="fa-solid fa-location-dot"></i> ${name}, ${country}</p>
             </div>
         `;
+        let{sunrise, sunset} = data.sys,
+        {timezone, visibility} = data,
+        {humidity, pressure, feels_like} = data.main,
+        {speed}= data.wind,
+        sRiseTime= moment.utc(sunrise, 'X').add(timezone, 'seconds').format('hh:mm A'),
+        sSetTime= moment.utc(sunset, 'X').add(timezone, 'seconds').format('hh:mm A');
+        sunriseCard.innerHTML = `
+                  <div class="crd-head">
+                  <p>Sunrise and Sunset</p>
+                </div>
+                <div class="srise-sset">
+                  <div class="item">
+                    <div class="icon">
+                      <img src="images/sunrise.png" alt="">
+                    </div>
+                    <div>
+                      <p>Sunrise</p>
+                      <h2>${sRiseTime}</h2>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="icon">
+                      <img src="images/sunset.png" alt="">
+                    </div>
+                    <div>
+                      <p>Sunset</p>
+                      <h2>${sSetTime}</h2>
+                    </div>
+                  </div>
+                </div>
+       ` ;
+       humidityVal.innerHTML = `${humidity}%`;
+       pressureVal.innerHTML = `${pressure}hPa`;
+       visibilityVal.innerHTML = `${visibility / 1000}km`;
+       windSpeedVal.innerHTML = `${speed}m/s`;
+       feelsVal.innerHTML = `${(feels_like - 273.15).toFixed(2)}&deg;C`;
+
     }).catch((error) => {
         alert('Failed to fetch current weather' + error.message);
     });
@@ -173,4 +216,3 @@ function getCityCoordinates() {
 }
 
 searchBtn.addEventListener('click', getCityCoordinates);
-
