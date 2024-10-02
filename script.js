@@ -1,11 +1,13 @@
-let cityInput = document.getElementById('city_input'),
-    searchBtn = document.getElementById('search_btn'),
-    currentWeatherCard = document.querySelectorAll('.weather-left .card')[0],
-    sixDaysForecastCard = document.querySelector('.day-forecast'),
-    apiCard = document.querySelectorAll('.highlights .card')[0],
-    aqiList = ['Good', 'Fair', 'Moderate', 'Poor', 'Very Poor'],
-    sunriseCard = document.querySelectorAll('.highlights .card')[1],
-    hourlyForecastCard = document.querySelector('.hourly-forecast'), // Added for hourly forecast
+// Assigning DOM elements to variables for easier reference
+let cityInput = document.getElementById('city_input'),// City input field
+    searchBtn = document.getElementById('search_btn'), //Search button
+    locationBtn = document.getElementById('location_btn'),//Location button
+    currentWeatherCard = document.querySelectorAll('.weather-left .card')[0],//card for current weather
+    sixDaysForecastCard = document.querySelector('.day-forecast'),//card for six day weather forecast
+    apiCard = document.querySelectorAll('.highlights .card')[0],//Card for air quality index display
+    aqiList = ['Good', 'Fair', 'Moderate', 'Poor', 'Very Poor'],//List of air quality levels
+    sunriseCard = document.querySelectorAll('.highlights .card')[1],//Card for sunrise and sunset times
+    hourlyForecastCard = document.querySelector('.hourly-forecast'), //Card for hourly weather forecast
     humidityVal = document.getElementById('humidityVal'),
     pressureVal = document.getElementById('pressureVal'),
     visibilityVal = document.getElementById('visibilityVal'),
@@ -13,18 +15,22 @@ let cityInput = document.getElementById('city_input'),
     feelsVal = document.getElementById('feelsVal'),
     themeToggleBtn = document.getElementById('theme-toggle-btn');
 
-const api_Key = "7bfff8480401c47a93c687da39a9e34c";
+    //OpenWeatherMap API key
+const api_Key = "7bfff8480401c47a93c687da39a9e34c"; 
 
+    // Check local storage for theme preference and apply it
 if (localStorage.getItem('theme') === 'dark') {
     document.body.classList.add('dark-mode');
 } else {
     document.body.classList.add('light-mode');
 }
-
+ 
+  // Toggle between dark and light mode when the theme toggle button is clicked
 themeToggleBtn.addEventListener('click', () => {
     document.body.classList.toggle('dark-mode');
     document.body.classList.toggle('light-mode');
 
+     // Save the current theme preference to local storage
     if (document.body.classList.contains('dark-mode')) {
         localStorage.setItem('theme', 'dark');
     } else {
@@ -32,7 +38,9 @@ themeToggleBtn.addEventListener('click', () => {
     }
 });
 
+// Function to get weather details based on location (name, lat, lon, etc.)
 function getWeatherDetails(name, lat, lon, country, state) {
+    // URLs for weather, forecast, and air pollution data from OpenWeather API
     let FORECAST_API_URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${api_Key}`,
         WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${api_Key}`,
         AIR_POLLUTION_API_URL = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${api_Key}`,
@@ -59,7 +67,8 @@ function getWeatherDetails(name, lat, lon, country, state) {
             'November',
             'December',
         ];
-
+ 
+        // Fetch air pollution data from API and update the air quality card
     fetch(AIR_POLLUTION_API_URL).then(res => res.json()).then(data => {
         let { co, no, no2, o3, so2, pm2_5, pm10, nh3 } = data.list[0].components;
         apiCard.innerHTML = `
@@ -105,12 +114,13 @@ function getWeatherDetails(name, lat, lon, country, state) {
         `;
     })
 
+    // Fetch current weather data and update the current weather card
     fetch(WEATHER_API_URL).then(res => res.json()).then(data => {
         if (data.cod !== 200) {
-            throw new Error(data.message);
+            throw new Error(data.message);// Handle error if data is not available
         }
 
-        let date = new Date();
+        let date = new Date(); // Get current date
         currentWeatherCard.innerHTML = `
             <div class="current-weather">
                 <div class="details">
@@ -128,13 +138,17 @@ function getWeatherDetails(name, lat, lon, country, state) {
                 <p><i class="fa-solid fa-location-dot"></i> ${name}, ${country}</p>
             </div>
         `;
+
+         // Update sunrise, sunset, and other weather parameters
         let { sunrise, sunset } = data.sys,
             { timezone, visibility } = data,
             { humidity, pressure, feels_like } = data.main,
             { speed } = data.wind,
             sRiseTime = moment.utc(sunrise, 'X').add(timezone, 'seconds').format('hh:mm A'),
             sSetTime = moment.utc(sunset, 'X').add(timezone, 'seconds').format('hh:mm A');
-        sunriseCard.innerHTML = `
+       
+       // Update sunrise and sunset card
+            sunriseCard.innerHTML = `
                   <div class="crd-head">
                   <p>Sunrise and Sunset</p>
                 </div>
@@ -159,25 +173,29 @@ function getWeatherDetails(name, lat, lon, country, state) {
                   </div>
                 </div>
        `;
+
+       // Update other weather values
         humidityVal.innerHTML = `${humidity}%`;
         pressureVal.innerHTML = `${pressure}hPa`;
-        visibilityVal.innerHTML = `${visibility / 1000}km`;
+        visibilityVal.innerHTML = `${visibility / 1000}km`; // Convert visibility to kilometers
         windSpeedVal.innerHTML = `${speed}m/s`;
-        feelsVal.innerHTML = `${(feels_like - 273.15).toFixed(2)}&deg;C`;
+        feelsVal.innerHTML = `${(feels_like - 273.15).toFixed(2)}&deg;C`; // Convert feels-like temperature to Celsius
     }).catch((error) => {
-        alert('Failed to fetch current weather' + error.message);
+        alert('Failed to fetch current weather' + error.message); // Display error message if fetching weather fails
     });
 
+     // Fetch six-day weather forecast data and update the forecast card
     fetch(FORECAST_API_URL).then(res => res.json()).then(data => {
         let specificForecastDays = [];
         let sixDaysForecast = data.list.filter(forecast => {
             let forecastDate = new Date(forecast.dt_txt).getDate();
             if (!specificForecastDays.includes(forecastDate)) {
-                return specificForecastDays.push(forecastDate);
+                return specificForecastDays.push(forecastDate); // Filter unique days for the forecast
             }
         });
-        sixDaysForecastCard.innerHTML = '';
-
+        sixDaysForecastCard.innerHTML = ''; // Clear previous forecast content
+       
+      
         for (let i = 1; i < sixDaysForecast.length; i++) {
             let date = new Date(sixDaysForecast[i].dt_txt);
             sixDaysForecastCard.innerHTML += `
@@ -207,24 +225,61 @@ function getWeatherDetails(name, lat, lon, country, state) {
             `;
         });
     }).catch((error) => {
-        alert('Failed to fetch weather forecast' + error.message);
+        alert(`Failed to fetch weather forecast of ${cityName}. Please try again`);
     });
 }
 
 function getCityCoordinates() {
+   // Get the city name from the input field and trim any extra spaces
     let cityName = cityInput.value.trim();
+    // Get the city name from the input field and trim any extra spaces
     cityInput.value = '';
 
+// Construct the API URL to fetch city coordinates (latitude and longitude) from OpenWeatherMap
     let API_URL = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=${api_Key}`;
-    fetch(API_URL).then(res => res.json()).then(data => {
+  
+    // Fetch the city coordinates using the API
+    fetch(API_URL).then(res => res.json()) // Parse the response as JSON
+    .then(data => {
+       // If no data is returned, throw an error (city not found)
         if (data.length === 0) {
             throw new Error('City not found');
         }
+
+        // Destructure the latitude, longitude, name, country, and state from the first result
         let { lat, lon, name, country, state } = data[0];
+        // Call getWeatherDetails to fetch weather information for the selected city
         getWeatherDetails(name, lat, lon, country, state);
     }).catch(error => {
-        alert('Failed to fetch city coordinates: ' + error.message);
+      // Display an alert if there is an error in fetching the city coordinates
+        alert(`Failed to fetch coordinates of ${cityName}.Please try again`);
     });
 }
 
+ function getUserCoordinates(){
+  // Get the user's current geolocation (latitude and longitude) using the browser's Geolocation API
+  navigator.geolocation.getCurrentPosition(position => {
+     // Destructure the latitude and longitude from the position object
+     let {latitude, longitude} = position.coords;
+ // Construct the reverse geocoding API URL to get the city name based on the user's coordinates
+     let REVERSE_GEOCODING_URL = `https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${api_Key}`;
+ // Fetch the city name and country based on the user's latitude and longitude
+    fetch(REVERSE_GEOCODING_URL).then(res => res.json()).then(data => {
+      let {name, country, state} = data[0];
+      getWeatherDetails(name, latitude, longitude, country, state);
+
+    }).catch(() => {
+      alert(`Failed to fetch user coordinates`);
+    });
+  }, error => {
+    if(error.code === error.PERMISSION_DENIED){
+      alert('Geolocation permission denied. Please reset location permission so as to grant access again');
+    }
+  });
+ }  
+// Event listener for search button, triggers weather fetching based on city input
 searchBtn.addEventListener('click', getCityCoordinates);
+//Event listener for location button
+locationBtn.addEventListener('click', getUserCoordinates);
+
+cityInput.addEventListener('keyup', e => e.key === 'Enter' && getCityCoordinates());
