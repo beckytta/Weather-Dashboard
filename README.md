@@ -1,5 +1,6 @@
 Weather Dashboard
 1. Project Overview
+
 Objective
 The Weather Dashboard project aimed to create a dynamic, user-friendly web application that allows users to search for current weather conditions in various cities and retrieve weather updates for their current location using geolocation. By using the OpenWeatherMap API, the application provides real-time weather data including hourly forecasts, temperature, humidity, wind speed, and more.
 Features
