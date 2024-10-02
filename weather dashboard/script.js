@@ -213,12 +213,13 @@ function getWeatherDetails(name, lat, lon, country, state) {
             `;
         }
 
-        // Add hourly forecast
+        // Clear the inner HTML of 'hourlyForecastCard' to ensure no previous data is shown.
         hourlyForecastCard.innerHTML = '';
-        let hourlyData = data.list.slice(0, 12); // Show 12 hours of forecast
 
-        hourlyData.forEach(hour => {
-            let hourDate = new Date(hour.dt_txt);
+        // Slice the 'data.list' array to get the first 12 elements (12 hours of forecast).
+        let hourlyData = data.list.slice(0, 12); // Show 12 hours of forecast
+        hourlyData.forEach(hour => {// Loop through each item in 'hourlyData' using forEach to generate the hourly forecast.
+            let hourDate = new Date(hour.dt_txt); // Convert the 'dt_txt' string to a JavaScript Date object to extract the hour.
             hourlyForecastCard.innerHTML += `
                 <div class="hour-card">
                     <p>${hourDate.getHours()}:00</p>
