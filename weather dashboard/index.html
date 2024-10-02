@@ -8,10 +8,13 @@
     <script src="https://kit.fontawesome.com/c0188a9856.js" crossorigin="anonymous"></script>
   </head>
     <body>
+      <!--main container for the entire content-->
       <div class="container">
+        <!--header section--> 
         <div class="header">
           <h2>Weather Dashboard</h2>
           <div class="input">
+            <!--text input for city name-->
             <input type="text" name="city" id="city_input" placeholder="Enter city name">
             <button type="button" id="search_btn">
               <i class="fa-solid fa-magnifying-glass"></i>Search
@@ -23,7 +26,9 @@
 
           </div>
         </div>
+        <!--weather data section divided into right and left sides-->
         <div class="weather-data">
+          <!--left side-->
           <div class="weather-left">
             <div class="card">
               <div class="current-weather">
@@ -37,11 +42,13 @@
                 </div>
               </div>
               <hr>
+              <!--footer with date and location placeholders-->
               <div class="card-footer">
                 <p><i class="fa-regular fa-calendar"></i>_____</p>
                 <p><i class="fa-solid fa-location-dot"></i>_____</p>
               </div>
             </div>
+            <!--Six days forecast section-->
             <div class="card">
               <h2>6 days Forecast</h2>
               <div class="day-forecast">
@@ -96,14 +103,17 @@
               </div>
             </div>
           </div>
+          <!---Right side-->
           <div class="weather-right">
             <h2>The Day's Highlights </h2>
             <div class="highlights">
+              <!--Air quality index section-->
               <div class="card">
                 <div class="card-head">
                   <p>Air Quality Index</p>
                   <p class="air-index aqi-1">Good</p>
                 </div>
+                <!--Display various air quality metrics-->
                 <div class="air-indices">
                   <i class="fa-solid fa-wind" style="font-size: 3rem;"></i>
                   <div class="item">
@@ -140,6 +150,7 @@
                   </div>
                 </div>
               </div>
+              <!--Sunrise and sunset times-->
               <div class="card">
                 <div class="crd-head">
                   <p>Sunrise and Sunset</p>
@@ -165,6 +176,7 @@
                   </div>
                 </div>
               </div>
+              <!--humidity data-->
               <div class="card">
                 <div class="card-head">
                   <p>Humidity</p>
@@ -174,6 +186,7 @@
                   <h2 id="humidityVal"> ____% </h2>
                 </div>
               </div>
+              <!--pressure data-->
               <div class="card">
                 <div class="card-head">
                   <p>Pressure</p>
@@ -183,6 +196,7 @@
                   <h2 id="pressureVal"> ____hPa </h2>
                 </div>
               </div>
+              <!--visibility data-->
               <div class="card">
                 <div class="card-head">
                   <p>Visibility</p>
@@ -192,6 +206,7 @@
                   <h2 id="visibilityVal"> ____km </h2>
                 </div>
               </div>
+              <!--wind speed data-->
               <div class="card">
                 <div class="card-head">
                   <p>Wind Speed</p>
@@ -201,6 +216,7 @@
                   <h2 id="windSpeedVal"> ____m/s </h2>
                 </div>
               </div>
+              <!--feels like data-->
               <div class="card">
                 <div class="card-head">
                   <p>Feels Like</p>
@@ -211,6 +227,7 @@
                 </div>
               </div>
             </div>
+            <!--Hourly forecast section-->
             <h2>Today at</h2>
             <div class="hourly-forecast">
               <div class="card">
@@ -257,8 +274,7 @@
           </div>
         </div>
       </div>
-      
-
+      <!--Import external library-->
       <script src="https://momentjs.com/downloads/moment.min.js"></script>
       <script src="script.js"></script>
     </body>
