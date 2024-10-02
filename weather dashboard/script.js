@@ -195,9 +195,12 @@ function getWeatherDetails(name, lat, lon, country, state) {
         });
         sixDaysForecastCard.innerHTML = ''; // Clear previous forecast content
        
-      
+      // Loop through the 'sixDaysForecast' array, starting from the second item (i = 1) 
+// to avoid including the current day in the forecast.
         for (let i = 1; i < sixDaysForecast.length; i++) {
+          // Create a new Date object from the 'dt_txt' string, which contains the forecast date and time.
             let date = new Date(sixDaysForecast[i].dt_txt);
+            // Dynamically generate the HTML for each forecast card and append it to 'sixDaysForecastCard'.
             sixDaysForecastCard.innerHTML += `
              <div class="forecast-thing">
                   <div class="icon-wrapper">
