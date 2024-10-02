@@ -38,11 +38,10 @@ JavaScript: Handling API requests, DOM manipulation, and interaction logic.
 
 OpenWeatherMap API: Used to fetch real-time weather data and display it on the dashboard.
 
-
-![project](https://github.com/user-attachments/assets/170cdca0-0091-4ccf-b5c1-19e9c01543c5)
-
 Geolocation API: Integrated to detect the user’s current location and provide localized weather updates.
 
 Air pollution API:  Used to get air quality information for a location.
 
 FontAwesome: Used for icons  i.e humidity icon, pressure etc
+
+![project](https://github.com/user-attachments/assets/170cdca0-0091-4ccf-b5c1-19e9c01543c5)
