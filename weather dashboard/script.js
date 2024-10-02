@@ -3,7 +3,7 @@ let cityInput = document.getElementById('city_input'),// City input field
     searchBtn = document.getElementById('search_btn'), //Search button
     locationBtn = document.getElementById('location_btn'),//Location button
     currentWeatherCard = document.querySelectorAll('.weather-left .card')[0],//card for current weather
-    sixDaysForecastCard = document.querySelector('.day-forecast'),//card for six day weather forecast
+    fiveDaysForecastCard = document.querySelector('.day-forecast'),//card for five day weather forecast
     apiCard = document.querySelectorAll('.highlights .card')[0],//Card for air quality index display
     aqiList = ['Good', 'Fair', 'Moderate', 'Poor', 'Very Poor'],//List of air quality levels
     sunriseCard = document.querySelectorAll('.highlights .card')[1],//Card for sunrise and sunset times
@@ -184,28 +184,28 @@ function getWeatherDetails(name, lat, lon, country, state) {
         alert('Failed to fetch current weather' + error.message); // Display error message if fetching weather fails
     });
 
-     // Fetch six-day weather forecast data and update the forecast card
+     // Fetch five-day weather forecast data and update the forecast card
     fetch(FORECAST_API_URL).then(res => res.json()).then(data => {
         let specificForecastDays = [];
-        let sixDaysForecast = data.list.filter(forecast => {
+        let fiveDaysForecast = data.list.filter(forecast => {
             let forecastDate = new Date(forecast.dt_txt).getDate();
             if (!specificForecastDays.includes(forecastDate)) {
                 return specificForecastDays.push(forecastDate); // Filter unique days for the forecast
             }
         });
-        sixDaysForecastCard.innerHTML = ''; // Clear previous forecast content
+        fiveDaysForecastCard.innerHTML = ''; // Clear previous forecast content
        
-      // Loop through the 'sixDaysForecast' array, starting from the second item (i = 1) 
+      // Loop through the 'fiveDaysForecast' array, starting from the second item (i = 1) 
 // to avoid including the current day in the forecast.
-        for (let i = 1; i < sixDaysForecast.length; i++) {
+        for (let i = 1; i < fiveDaysForecast.length; i++) {
           // Create a new Date object from the 'dt_txt' string, which contains the forecast date and time.
-            let date = new Date(sixDaysForecast[i].dt_txt);
+            let date = new Date(fiveDaysForecast[i].dt_txt);
             // Dynamically generate the HTML for each forecast card and append it to 'sixDaysForecastCard'.
-            sixDaysForecastCard.innerHTML += `
+            fiveDaysForecastCard.innerHTML += `
              <div class="forecast-thing">
                   <div class="icon-wrapper">
-                  <img src="https://openweathermap.org/img/wn/${sixDaysForecast[i].weather[0].icon}.png" alt="">
-                  <span>${(sixDaysForecast[i].main.temp - 273.15).toFixed(2)}&deg;C</span>
+                  <img src="https://openweathermap.org/img/wn/${fiveDaysForecast[i].weather[0].icon}.png" alt="">
+                  <span>${(fiveDaysForecast[i].main.temp - 273.15).toFixed(2)}&deg;C</span>
                   </div>
                   <p>${date.getDate()} ${months[date.getMonth()]}</p>
                   <p>${days[date.getDay()]}</p>
