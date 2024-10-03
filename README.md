@@ -44,4 +44,5 @@ Air pollution API:  Used to get air quality information for a location.
 
 FontAwesome: Used for icons  i.e humidity icon, pressure etc
 
+![weather dashboard](https://github.com/user-attachments/assets/826a45a7-dac9-435c-a522-463ef5d85309)
 
