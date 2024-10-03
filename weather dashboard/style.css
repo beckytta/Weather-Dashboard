@@ -20,6 +20,7 @@ body {
   color: white;
   font-family: sans-serif;
   padding: 0 16px;
+  overflow-y: auto;
 }
 
 hr {
