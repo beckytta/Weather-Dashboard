@@ -54,18 +54,18 @@ function getWeatherDetails(name, lat, lon, country, state) {
             'Saturday',
         ],
         months = [
-            'January',
-            'February',
+            'Jan',
+            'Feb',
             'March',
             'April',
             'May',
             'June',
             'July',
-            'August',
-            'September',
-            'October',
-            'November',
-            'December',
+            'Aug',
+            'Sept',
+            'Oct',
+            'Nov',
+            'Dec',
         ];
  
         // Fetch air pollution data from API and update the air quality card
@@ -216,8 +216,8 @@ function getWeatherDetails(name, lat, lon, country, state) {
         // Clear the inner HTML of 'hourlyForecastCard' to ensure no previous data is shown.
         hourlyForecastCard.innerHTML = '';
 
-        // Slice the 'data.list' array to get the first 12 elements (12 hours of forecast).
-        let hourlyData = data.list.slice(0, 12); // Show 12 hours of forecast
+        // Slice the 'data.list' array to get the first 6 elements (6 hours of forecast).
+        let hourlyData = data.list.slice(0, 6); // Show 6 hours of forecast
         hourlyData.forEach(hour => {// Loop through each item in 'hourlyData' using forEach to generate the hourly forecast.
             let hourDate = new Date(hour.dt_txt); // Convert the 'dt_txt' string to a JavaScript Date object to extract the hour.
             hourlyForecastCard.innerHTML += `
@@ -285,5 +285,5 @@ function getCityCoordinates() {
 searchBtn.addEventListener('click', getCityCoordinates);
 //Event listener for location button
 locationBtn.addEventListener('click', getUserCoordinates);
-
+// Add an event listener to the cityInput that triggers getCityCoordinates() when the Enter key is pressed
 cityInput.addEventListener('keyup', e => e.key === 'Enter' && getCityCoordinates());
