@@ -40,6 +40,8 @@ OpenWeatherMap API: Used to fetch real-time weather data and display it on the d
 
 Geolocation API: Integrated to detect the user’s current location and provide localized weather updates.
 
+![capstone project](https://github.com/user-attachments/assets/802a2e3e-eb3d-4e8d-9bf0-61085aff04c0)
+
 Air pollution API:  Used to get air quality information for a location.
 
 FontAwesome: Used for icons  i.e humidity icon, pressure etc
