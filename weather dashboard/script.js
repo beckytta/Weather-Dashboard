@@ -178,7 +178,7 @@ function getWeatherDetails(name, lat, lon, country, state) {
         humidityVal.innerHTML = `${humidity}%`;
         pressureVal.innerHTML = `${pressure}hPa`;
         visibilityVal.innerHTML = `${visibility / 1000}km`; // Convert visibility to kilometers
-        windSpeedVal.innerHTML = `${speed}m/s`;
+        windSpeedVal.innerHTML = `${speed}km/h`;
         feelsVal.innerHTML = `${(feels_like - 273.15).toFixed(2)}&deg;C`; // Convert feels-like temperature to Celsius
     }).catch((error) => {
         alert('Failed to fetch current weather' + error.message); // Display error message if fetching weather fails
