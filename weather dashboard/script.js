@@ -13,7 +13,8 @@ let cityInput = document.getElementById('city_input'),// City input field
     visibilityVal = document.getElementById('visibilityVal'),
     windSpeedVal = document.getElementById('windSpeedVal'),
     feelsVal = document.getElementById('feelsVal'),
-    themeToggleBtn = document.getElementById('theme-toggle-btn');
+    themeToggleBtn = document.getElementById('theme-toggle-btn'),
+    refreshBtn = document.getElementById('refresh_btn')    ;
 
     //OpenWeatherMap API key
 const api_Key = "7bfff8480401c47a93c687da39a9e34c"; 
@@ -281,9 +282,14 @@ function getCityCoordinates() {
     }
   });
  }  
+
 // Event listener for search button, triggers weather fetching based on city input
 searchBtn.addEventListener('click', getCityCoordinates);
 //Event listener for location button
 locationBtn.addEventListener('click', getUserCoordinates);
 // Add an event listener to the cityInput that triggers getCityCoordinates() when the Enter key is pressed
 cityInput.addEventListener('keyup', e => e.key === 'Enter' && getCityCoordinates());
+
+
+
+
