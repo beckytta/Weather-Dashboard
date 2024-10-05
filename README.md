@@ -28,6 +28,7 @@ https://weather-dashboard-six-phi.vercel.app/
 2. Development Process
 
 Key Steps
+
 Initial Setup: The project began by setting up the HTML structure and layout, designing placeholders for the current weather, hourly forecast, and weekly forecast sections.
 
 API Integration: The OpenWeatherMap API was integrated to fetch and display current weather data, hourly updates, and a 5-day forecast for cities. I also included the Geolocation API to automatically detect the user's location and display weather information for that area and Air pollution API to get detailed air quality information on the user’s location or searched city.
