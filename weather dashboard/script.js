@@ -201,7 +201,7 @@ function getWeatherDetails(name, lat, lon, country, state) {
         for (let i = 1; i < fiveDaysForecast.length; i++) {
           // Create a new Date object from the 'dt_txt' string, which contains the forecast date and time.
             let date = new Date(fiveDaysForecast[i].dt_txt);
-            // Dynamically generate the HTML for each forecast card and append it to 'sixDaysForecastCard'.
+            // Dynamically generate the HTML for each forecast card and append it to 'fiveDaysForecastCard'.
             fiveDaysForecastCard.innerHTML += `
              <div class="forecast-thing">
                   <div class="icon-wrapper">
