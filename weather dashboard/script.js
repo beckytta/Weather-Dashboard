@@ -233,12 +233,12 @@ function getWeatherDetails(name, lat, lon, country, state) {
         alert(`Failed to fetch weather forecast of ${cityName}. Please try again`);
     });
 }
+const updateInterval = 180000;
 
 function getCityCoordinates() {
    // Get the city name from the input field and trim any extra spaces
     let cityName = cityInput.value.trim();
-    cityInput.value = ''; // Clear input field
-
+   
 // Construct the API URL to fetch city coordinates (latitude and longitude) from OpenWeatherMap
     let API_URL = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=${api_Key}`;
   
@@ -281,6 +281,17 @@ function getCityCoordinates() {
     }
   });
  }  
+ const setDuration = 180000;
+function autoRefresh(){
+  // Automatically update the weather every 3 minutes (180000 milliseconds)
+ setInterval(() => {
+   console.log("Automatically updating weather data");
+    
+   getCityCoordinates();
+ }, 180000);
+  }
+ autoRefresh();
+ 
 // Event listener for search button, triggers weather fetching based on city input
 searchBtn.addEventListener('click', getCityCoordinates);
 //Event listener for location button
