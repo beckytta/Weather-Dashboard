@@ -237,8 +237,7 @@ function getWeatherDetails(name, lat, lon, country, state) {
 function getCityCoordinates() {
    // Get the city name from the input field and trim any extra spaces
     let cityName = cityInput.value.trim();
-    // Get the city name from the input field and trim any extra spaces
-    cityInput.value = '';
+    cityInput.value = ''; // Clear input field
 
 // Construct the API URL to fetch city coordinates (latitude and longitude) from OpenWeatherMap
     let API_URL = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=${api_Key}`;
@@ -282,7 +281,6 @@ function getCityCoordinates() {
     }
   });
  }  
-
 // Event listener for search button, triggers weather fetching based on city input
 searchBtn.addEventListener('click', getCityCoordinates);
 //Event listener for location button
@@ -291,5 +289,4 @@ locationBtn.addEventListener('click', getUserCoordinates);
 cityInput.addEventListener('keyup', e => e.key === 'Enter' && getCityCoordinates());
 
 
-
-
+ 
