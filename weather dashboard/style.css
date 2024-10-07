@@ -1,11 +1,11 @@
 :root {
   --bg-color1: rgb(7, 7, 195);
   --bg-color2: rgb(26, 123, 155);
-  --a1-1: #d4e157;
-  --ai-2: #ffee58;
-  --ai-3: #ffca28;
-  --ai-4: #ff7043;
-  --ai-5: #ee201d;
+  --aqi-1: #d4e157;
+  --aqi-2: #ffee58;
+  --aqi-3: #ffca28;
+  --aqi-4: #ff7043;
+  --aqi-5: #ee201d;
 }
 
 * {
@@ -179,23 +179,23 @@ body.dark-mode {
 }
 
 .weather-data .weather-right .highlights .card-head .air-index.ai-1 {
-  background-color: var(--a1-1);
+  background-color: var(--aqi-1);
 }
 
 .weather-data .weather-right .highlights .card-head .air-index.ai-2 {
-  background-color: var(--ai-2);
+  background-color: var(--aqi-2);
 }
 
 .weather-data .weather-right .highlights .card-head .air-index.ai-3 {
-  background-color: var(--ai-3);
+  background-color: var(--aqi-3);
 }
 
 .weather-data .weather-right .highlights .card-head .air-index.ai-4 {
-  background-color: var(--ai-4);
+  background-color: var(--aqi-4);
 }
 
 .weather-data .weather-right .highlights .card-head .air-index.ai-5 {
-  background-color: var(--ai-5);
+  background-color: var(--aqi-5);
 }
 
 .weather-data .weather-right .highlights .air-indices {
