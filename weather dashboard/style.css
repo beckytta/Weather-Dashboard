@@ -312,7 +312,7 @@ body.dark-mode {
 
 @media (max-width: 660px) {
   .header {
-    flex-direction: column;
+    flex-direction:column;
   }
 
   .header h2 {
