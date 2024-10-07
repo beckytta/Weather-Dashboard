@@ -288,7 +288,7 @@ function autoRefresh(){
    console.log("Automatically updating weather data");
     
    getCityCoordinates();
- }, 180000);
+ }, 180000) //3mins;
   }
  autoRefresh();
  
