@@ -283,7 +283,7 @@ function getCityCoordinates() {
 document.addEventListener('DOMContentLoaded', () => {
   getUserCoordinates(); // Automatically get user's coordinates
 });
- const setDuration = 10000;
+ const setDuration = 180000;
 function autoRefresh(){
   // Automatically update the weather every 3 minutes (180000 milliseconds)
  setInterval(() => {
@@ -294,7 +294,7 @@ function autoRefresh(){
     }else {
       getUserCoordinates();
     }
- }, 10000) //3mins;
+ }, 180000) //3mins;
   }
  autoRefresh();
  
