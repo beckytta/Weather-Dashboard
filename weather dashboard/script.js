@@ -263,9 +263,7 @@ function getCityCoordinates() {
  function getUserCoordinates(){
   // Get the user's current geolocation (latitude and longitude) using the browser's Geolocation API
   navigator.geolocation.getCurrentPosition(position => {
-     // Destructure the latitude and longitude from the position object
-     let {latitude, longitude} = position.coords;
- // Construct the reverse geocoding API URL to get the city name based on the user's coordinates
+     let {latitude, longitude} = position.coords; // Destructure the latitude and longitude from the position object
      let REVERSE_GEOCODING_URL = `https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${api_Key}`;
  // Fetch the city name and country based on the user's latitude and longitude
     fetch(REVERSE_GEOCODING_URL).then(res => res.json()).then(data => {
@@ -281,6 +279,10 @@ function getCityCoordinates() {
     }
   });
  }  
+ // Call getUserCoordinates on page load to fetch user's location automatically
+document.addEventListener('DOMContentLoaded', () => {
+  getUserCoordinates(); // Automatically get user's coordinates
+});
  const setDuration = 180000;
 function autoRefresh(){
   // Automatically update the weather every 3 minutes (180000 milliseconds)
