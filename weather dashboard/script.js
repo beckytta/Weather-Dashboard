@@ -256,7 +256,7 @@ function getCityCoordinates() {
         getWeatherDetails(name, lat, lon, country, state);
     }).catch(error => {
       // Display an alert if there is an error in fetching the city coordinates
-        alert(`Failed to fetch coordinates of ${cityName}.Please try again`);
+        alert(`City not found.Please try again`);
     });
 }
 
